@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Development Training Roadmap</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+            overflow-x: auto;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.3rem;
+            color: rgba(255,255,255,0.9);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .roadmap {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            position: relative;
+        }
+
+        .roadmap::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(180deg, #4facfe 0%, #00f2fe 100%);
+            border-radius: 2px;
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+
+        .phase {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .phase:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .phase-indicator {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            box-shadow: 0 8px 25px rgba(79, 172, 254, 0.4);
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .phase-indicator:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 35px rgba(79, 172, 254, 0.6);
+        }
+
+        .phase-card {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .phase-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .phase-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.15);
+        }
+
+        .phase-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .phase-duration {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .phase-description {
+            color: #4a5568;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            font-size: 1.1rem;
+        }
+
+        .topics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .topic {
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            color: #2d3748;
+            border-left: 4px solid #4facfe;
+            transition: all 0.3s ease;
+        }
+
+        .topic:hover {
+            background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e0 100%);
+            transform: translateX(5px);
+        }
+
+        .skills-gained {
+            margin-top: 20px;
+            padding: 20px;
+            background: linear-gradient(135deg, #f0fff4 0%, #e6fffa 100%);
+            border-radius: 12px;
+            border-left: 4px solid #38a169;
+        }
+
+        .skills-gained h4 {
+            color: #2f855a;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .skills-list {
+            color: #2d3748;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .timeline-connector {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 40px;
+            background: linear-gradient(180deg, #4facfe 0%, #00f2fe 100%);
+            top: 100%;
+        }
+
+        .cta-section {
+            text-align: center;
+            margin-top: 80px;
+            animation: fadeInUp 0.8s ease-out 0.5s both;
+        }
+
+        .cta-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            margin: 0 auto;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .cta-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 20px;
+        }
+
+        .cta-description {
+            color: #4a5568;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 16px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(79, 172, 254, 0.4);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(79, 172, 254, 0.6);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .phase {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .phase:nth-child(2) { animation-delay: 0.1s; }
+        .phase:nth-child(3) { animation-delay: 0.2s; }
+        .phase:nth-child(4) { animation-delay: 0.3s; }
+        .phase:nth-child(5) { animation-delay: 0.4s; }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .phase {
+                flex-direction: column !important;
+                text-align: center;
+            }
+            
+            .roadmap::before {
+                display: none;
+            }
+            
+            .phase-indicator {
+                position: relative;
+                margin-bottom: 20px;
+            }
+            
+            .topics {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Web Development Mastery</h1>
+            <p>Your complete journey from beginner to professional web developer</p>
+        </div>
+
+        <div class="roadmap">
+            <div class="phase">
+                <div class="phase-indicator">1</div>
+                <div class="phase-card">
+                    <div class="phase-title">
+                        HTML & CSS Foundations
+                        <div class="phase-duration">Week 1-2</div>
+                    </div>
+                    <div class="phase-description">
+                        Build your development environment and create beautiful web pages
+                    </div>
+                    <div class="topics">
+                        <div class="topic">HTML5 Fundamentals</div>
+                        <div class="topic">CSS3 Styling</div>
+                        <div class="topic">Flexbox & Grid</div>
+                        <div class="topic">Responsive Design</div>
+                        <div class="topic">Development Tools</div>
+                        <div class="topic">Version Control (Git)</div>
+                    </div>
+                    <div class="skills-gained">
+                        <h4>Skills You'll Gain:</h4>
+                        <div class="skills-list">
+                            Create semantic HTML • Style with modern CSS • Build responsive layouts • Use developer tools • Manage code with Git
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="phase">
+                <div class="phase-indicator">2</div>
+                <div class="phase-card">
+                    <div class="phase-title">
+                        Advanced CSS & Animations
+                        <div class="phase-duration">Week 3</div>
+                    </div>
+                    <div class="phase-description">
+                        Master advanced styling techniques and create engaging animations
+                    </div>
+                    <div class="topics">
+                        <div class="topic">CSS Animations & Transitions</div>
+                        <div class="topic">Sass/SCSS</div>
+                        <div class="topic">CSS Frameworks (Bootstrap)</div>
+                        <div class="topic">Mobile-First Design</div>
+                        <div class="topic">CSS Best Practices</div>
+                        <div class="topic">Design Systems</div>
+                    </div>
+                    <div class="skills-gained">
+                        <h4>Skills You'll Gain:</h4>
+                        <div class="skills-list">
+                            Create smooth animations • Use CSS preprocessors • Work with frameworks • Implement design systems
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="phase">
+                <div class="phase-indicator">3</div>
+                <div class="phase-card">
+                    <div class="phase-title">
+                        JavaScript Fundamentals
+                        <div class="phase-duration">Week 4-5</div>
+                    </div>
+                    <div class="phase-description">
+                        Learn programming concepts and make your websites interactive
+                    </div>
+                    <div class="topics">
+                        <div class="topic">JavaScript Basics</div>
+                        <div class="topic">DOM Manipulation</div>
+                        <div class="topic">Events & Event Handling</div>
+                        <div class="topic">ES6+ Features</div>
+                        <div class="topic">Async JavaScript & Promises</div>
+                        <div class="topic">Error Handling</div>
+                    </div>
+                    <div class="skills-gained">
+                        <h4>Skills You'll Gain:</h4>
+                        <div class="skills-list">
+                            Program interactive features • Manipulate web pages dynamically • Handle user interactions • Use modern JavaScript syntax
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="phase">
+                <div class="phase-indicator">4</div>
+                <div class="phase-card">
+                    <div class="phase-title">
+                        Frontend Framework (React)
+                        <div class="phase-duration">Week 6-7</div>
+                    </div>
+                    <div class="phase-description">
+                        Build dynamic, scalable web applications with React
+                    </div>
+                    <div class="topics">
+                        <div class="topic">React Components</div>
+                        <div class="topic">State Management</div>
+                        <div class="topic">Props & Events</div>
+                        <div class="topic">React Hooks</div>
+                        <div class="topic">React Router</div>
+                        <div class="topic">API Integration</div>
+                    </div>
+                    <div class="skills-gained">
+                        <h4>Skills You'll Gain:</h4>
+                        <div class="skills-list">
+                            Build component-based applications • Manage application state • Create single-page applications • Integrate with APIs
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="phase">
+                <div class="phase-indicator">5</div>
+                <div class="phase-card">
+                    <div class="phase-title">
+                        Final Projects & Deployment
+                        <div class="phase-duration">Week 8</div>
+                    </div>
+                    <div class="phase-description">
+                        Build portfolio projects and deploy them to the web
+                    </div>
+                    <div class="topics">
+                        <div class="topic">Portfolio Website</div>
+                        <div class="topic">React Project</div>
+                        <div class="topic">GitHub Pages Deployment</div>
+                        <div class="topic">Netlify/Vercel</div>
+                        <div class="topic">Performance Optimization</div>
+                        <div class="topic">Career Preparation</div>
+                    </div>
+                    <div class="skills-gained">
+                        <h4>Skills You'll Gain:</h4>
+                        <div class="skills-list">
+                            Build professional portfolio • Deploy live applications • Optimize for performance • Prepare for job interviews
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="cta-section">
+            <div class="cta-card">
+                <h2 class="cta-title">Ready to Start Your Journey?</h2>
+                <p class="cta-description">
+                    By the end of this 8-week program, you'll have mastered frontend development, built multiple projects, and be ready to start your career as a web developer.
+                </p>
+                <button class="cta-button" onclick="showStats()">View Program Statistics</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showStats() {
+            const stats = `
+📊 Program Statistics:
+• Total Duration: 8 weeks
+• Hours of Learning: 120+ hours
+• Projects Built: 8+ projects
+• Technologies Covered: 15+ tools & frameworks
+• Job Placement Rate: 80%
+• Frontend Skills Focus: 100%
+
+🎯 Career Outcomes:
+• Frontend Developer
+• React Developer
+• UI/UX Developer
+• Junior Web Developer
+• JavaScript Developer
+            `;
+            
+            alert(stats);
+        }
+
+        // Add smooth scrolling and interactive effects
+        document.querySelectorAll('.phase-card').forEach(card => {
+            card.addEventListener('click', function() {
+                this.style.transform = 'scale(1.02)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 200);
+            });
+        });
+
+        // Add parallax effect to background
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallax = document.body;
+            const speed = scrolled * 0.1;
+            
+            parallax.style.backgroundPosition = `center ${speed}px`;
+        });
+    </script>
+</body>
+</html>
